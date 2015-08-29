@@ -7,7 +7,13 @@
 
 需要自己抓取表单，cookie和url（其实也就一个请求）
 
+## Run
+
+run.pyw运行
+
 ## Requests
+
+python
 
 flask
 
