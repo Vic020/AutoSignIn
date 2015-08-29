@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+{% block content %}
+    <form class="form-horizontal" method="POST" action="/set">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">URL：</label>
+    <div class="col-sm-9">
+      <input type="url" class="form-control" name="url" placeholder="URL" required="required" value="{{ data.url }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data：</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="data" placeholder="Data" required="required" value="{{ data.data }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Cookies：</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="cookies" placeholder="Cookies" required="required" value="{{ data.cookies }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="radio">
+        <label>
+          <input type="radio" name="method" value="GET" {{ 'checked' if data.method == 'GET' else ''}}> GET
+        </label>
+        <label>
+          <input type="radio" name="method" value="POST" {{ 'checked' if data.method == 'POST' else ''}} > POST
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">修改</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

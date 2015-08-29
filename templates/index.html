@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+{% block content %}
+    <form class="form-horizontal" method="POST" action="/set">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">URL：</label>
+    <div class="col-sm-9">
+      <input type="url" class="form-control" name="url" placeholder="URL" required="required">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Data：</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="data" placeholder="Data" required="required">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Cookies：</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="cookies" placeholder="Cookies" required="required">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="radio">
+        <label>
+          <input type="radio" name="method" value="GET"> GET
+        </label>
+        <label>
+          <input type="radio" name="method" value="POST" checked> POST
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">提交</button>
+    </div>
+  </div>
+</form>
+
+<hr>
+<div id="signin_list">
+{% for data in datas %}
+  <div >
+    <h1><b>{{data.webname}}</b> <small><a class="btn btn-success" href="/edit/{{data.webname}}"> 修改 </a><a class="btn btn-success" href="/del/{{data.webname}}"> 删除 </a></small><small> {{data.status}}</small></h1>
+  <p><b>Method:{{data.method}}</b></p>
+  <p><b>URL:{{data.url}}</b></p>
+  <p><b>Data:{{data.data}}</b></p>
+  <p><b>Cookies:{{data.cookies}}</b></p>
+  <hr>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}
