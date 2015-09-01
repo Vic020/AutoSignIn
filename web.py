@@ -11,13 +11,13 @@ app.config.from_object('config')
 @app.route('/')
 @app.route('/index')
 def index():
-    list_ = asi.list()
-    return render_template('index.html', datas=list_)
+    return render_template('index.html',)
 
 
 @app.route('/get')
 def get():
-    return json.dumps(asi.list())
+    list_ = asi.list()
+    return render_template('list.html', datas=list_)
 
 
 @app.route('/edit/<webname>')
@@ -43,7 +43,7 @@ def set():
         return redirect('/')
     if request.method == 'POST':
         url = request.form['url']
-        name = re.findall('[a-zA-Z]://[\w]+.([\w]+).', url)[0]
+        name = re.findall('[a-zA-Z]://([a-zA-Z0-9-._]+)', url)[0]
         method = request.form['method']
         data = request.form['data']
         cookies = request.form['cookies']

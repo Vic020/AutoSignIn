@@ -39,6 +39,8 @@ class AutoSignIn():
         for d in self.data.get('data', webname).split('&'):
             k, v = d.strip().split('=', 1)
             data[k] = v
+        if data.has_key('todaysay'):
+            data['todaysay'] = u'签到，大家好！'
         return data
 
     def _getCookies(self, webname):
@@ -47,6 +49,25 @@ class AutoSignIn():
             k, v = d.strip().split('=', 1)
             cookies[k] = v
         return cookies
+
+    def signOneIn(self, webname):
+        headers = self._getHeaders()
+        data = self._getData(webname)
+        cookies = self._getCookies(webname)
+        url = self.data.get('url', webname)
+        res = ''
+        if self.data.get('method', webname) == 'POST':
+            res = requests.post(url,
+                                headers=headers,
+                                data=data,
+                                cookies=cookies)
+        else:
+            res = requests.get(url,
+                               headers=headers,
+                               data=data,
+                               cookies=cookies)
+        return res.text
+        
 
     def signIn(self, webname):
         headers = self._getHeaders()
@@ -79,9 +100,11 @@ class AutoSignIn():
             return u'请在data上的todaysay等号后加上%E7%AD%BE%E5%88%B0%EF%BC%8C%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%81'
         elif len(re.findall(u'你选择的心情不正确', html)) > 0:
             return u'请在data上加上 &qdxq=kx'
-        if len(re.findall(u'恭喜你签到成功!', html)) > 0:
+        if len(re.findall(u'签到成功!', html)) > 0:
             return u'恭喜你签到成功!'
-        elif len(re.findall(u'您今日已经签到', html)) > 0:
+        elif len(re.findall(u'签到完毕', html)) > 0:
+            return u'今日已经签到!'
+        elif len(re.findall(u'已经签到', html)) > 0:
             return u'今日已经签到'
         elif len(re.findall(u'<div class="c">([\w\W]+)</div>', html)) > 0:
             return re.findall(u'<div class="c">([\w\W]+)</div>', html)[0]
@@ -89,10 +112,9 @@ class AutoSignIn():
         #     return 201
         # elif len(re.findall(u'', html)) > 0:
         #     return 202
-        # else:
-        #     logging.warning(html)
-        #     return 200
-        return html
+        else:
+            logging.warning(html)
+            return u'暂时未匹配,请到网页查看是否签到'
 
     def list(self):
         list_ = []

@@ -1,0 +1,10 @@
+{% for data in datas %}
+  <div >
+    <h1><b>{{data.webname}}</b> <small><a class="btn btn-success" href="/edit/{{data.webname}}"> 修改 </a><a class="btn btn-success" href="/del/{{data.webname}}"> 删除 </a></small><small> {{data.status}}</small></h1>
+  <p><b>Method:{{data.method}}</b></p>
+  <p><b>URL:{{data.url}}</b></p>
+  <p><b>Data:{{data.data}}</b></p>
+  <p><b>Cookies:{{data.cookies}}</b></p>
+  <hr>
+  </div>
+{% endfor %}
